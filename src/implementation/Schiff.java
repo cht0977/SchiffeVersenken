@@ -4,24 +4,25 @@ public class Schiff {
 
     private Schiffart name;
     private int laenge;
-    private Position position;
+    private Position[] positionen;
     private Himmelsrichtung himmelsrichtung;
 
-    public Schiff(Schiffart name, Position position) {
-        this.name = name;
-        this.laenge = initiiereLaenge();
-        this.position = position;
-    }
 
     public Schiff(Schiffart name, Position position, Himmelsrichtung himmelsrichtung) {
         this.name = name;
         this.laenge = initiiereLaenge();
-        this.position = position;
         this.himmelsrichtung = himmelsrichtung;
-
+        fuellePositionen(position);
     }
 
-    public int initiiereLaenge() {
+    public Schiff(Schiffart name, Position[] positionen, Himmelsrichtung himmelsrichtung) {
+        this.name = name;
+        this.laenge = positionen.length;
+        this.positionen = positionen;
+        this.himmelsrichtung = himmelsrichtung;
+    }
+
+    private int initiiereLaenge() {
         switch(name)  {
             case SCHLACHTSCHIFF: return 5;
             case UBOOT: return 2;
@@ -31,35 +32,21 @@ public class Schiff {
         }
     }
 
-    public Schiffart getName() {
-        return name;
+    private void fuellePositionen(Position p) {
+           this.positionen = new Position[laenge];
+           positionen[0] = p;
+           for(int i = 1; i < laenge; i++) {
+               switch(himmelsrichtung) {
+                   case OSTEN: p.setX(p.getX()+1);
+                   case NORDEN: p.setY(p.getY()-1);
+                   case SUEDEN: p.setY(p.getY()+1);
+                   case WESTEN: p.setX(p.getX()-1);
+               }
+               positionen[i] = p;
+           }
     }
 
-    public void setName(Schiffart name) {
-        this.name = name;
-    }
-
-    public int getLaenge() {
-        return laenge;
-    }
-
-    public void setLaenge(int laenge) {
-        this.laenge = laenge;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Himmelsrichtung getHimmelsrichtung() {
-        return himmelsrichtung;
-    }
-
-    public void setHimmelsrichtung(Himmelsrichtung himmelsrichtung) {
-        this.himmelsrichtung = himmelsrichtung;
+    public Position[] getPositionen() {
+        return positionen;
     }
 }

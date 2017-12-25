@@ -1,5 +1,7 @@
 package implementation;
 
+import implementation.Exceptions.FeldBereitsBeschossenException;
+
 public class Spielfeld implements SpielfeldInterface{
     private final int ANZAHL_SCHLACHTSCHIFF = 1;
     private final int ANZAHL_KREUZER = 2;
@@ -33,7 +35,9 @@ public class Spielfeld implements SpielfeldInterface{
         }
     }
 
-    public void platziereSchiff(Schiffart schiff) {
+    @Override
+    public boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) {
+        return true;
     }
 
     public Feld[][] getFelder() {

@@ -25,6 +25,7 @@ public class ClientThread implements Runnable{
     public void run() {
         readName();
         sendLobbyInformation();
+        listenForAction();
     }
 
     private void sendLobbyInformation() {
@@ -41,6 +42,24 @@ public class ClientThread implements Runnable{
             if(n != null && n.length() > 2){
                 setName(n);
                 System.out.println("ClientThread: Name is " + getName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void listenForAction(){
+        try {
+            String input = in.readLine();
+            while(input != null) {
+                if (input.startsWith("invite")) {
+                    String invitePlayer = input.split(":")[1];
+                    if (invitePlayer != null && invitePlayer.length() > 2) {
+                        server.invitePlayer(name, invitePlayer);
+                        out.println("An invitation to player " + invitePlayer + " has been sent");
+                    }
+                }
+                input = in.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();

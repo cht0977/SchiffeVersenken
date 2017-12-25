@@ -1,5 +1,7 @@
 package Client;
 
+import GUI.LobbyGUI;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,12 +12,12 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class LobbyClient {
-
     private Socket s;
     private PrintWriter out;
     private BufferedReader in;
     private String name = null;
     private ArrayList<String> lobbyNames;
+    private LobbyGUI lobbyGUI;
 
     public LobbyClient(Socket sock){
         this.s = sock;
@@ -30,6 +32,18 @@ public class LobbyClient {
         sendNameToServer();
         createLobby();
         System.out.println("User " + name + " is connecting to the Lobby");
+        listenForAnswer();
+    }
+
+    private void listenForAnswer() {
+        try {
+            String input = in.readLine();
+            while(input != null){
+                System.out.println("LobbyClient: Server answered with: " + input);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createLobby() {
@@ -39,14 +53,17 @@ public class LobbyClient {
                 input = in.readLine();
                 while(!"endLobbyInformation".equals(input)){
                     lobbyNames.add(input);
+                    input = in.readLine();
                 }
             }
+            lobbyGUI = new LobbyGUI(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-
-
+    public void invitePlayer(String player){
+        out.println("invite:"  + player);
     }
 
     private void sendNameToServer() {
@@ -74,6 +91,14 @@ public class LobbyClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> getLobbyNames(){
+        return lobbyNames;
+    }
+
+    public String getName(){
+        return name;
     }
 
 }

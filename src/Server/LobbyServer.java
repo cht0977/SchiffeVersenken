@@ -53,4 +53,8 @@ public class LobbyServer {
     public void setClientThreads(ArrayList<ClientThread> clientThreads) {
         this.clientThreads = clientThreads;
     }
+
+    public void invitePlayer(String fromPlayer, String toPlayer){
+        System.out.println("LobbyServer: Player " + fromPlayer + " invited " + toPlayer);
+    }
 }

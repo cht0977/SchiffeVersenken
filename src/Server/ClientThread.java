@@ -34,6 +34,7 @@ public class ClientThread implements Runnable{
             out.println(ct.getName());
         }
         out.println("endLobbyInformation");
+        System.out.println("ClientThread " + name + ": Lobbyinfo transmitted");
     }
 
     private void readName() {
@@ -49,8 +50,10 @@ public class ClientThread implements Runnable{
     }
 
     public void listenForAction(){
+        System.out.println("ClientThread " + name + ": Listening for answer");
         try {
             String input = in.readLine();
+            System.out.println("ClientThread " + name + ": Anwer received: " + input);
             while(input != null) {
                 if (input.startsWith("invite")) {
                     String invitePlayer = input.split(":")[1];

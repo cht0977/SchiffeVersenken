@@ -30,7 +30,7 @@ public class LobbyServer {
             System.out.println("Server could not be started :( ");
             System.exit(-1);
         }
-        System.out.println("Server is not accepting connections on Port " + port);
+        System.out.println("Server is now accepting connections on Port " + port);
 
         while(true){
             System.out.println("Server: Waiting for new connection");
@@ -39,7 +39,8 @@ public class LobbyServer {
                 System.out.println("Server: New connection received, starting ClientThread");
                 ClientThread ct = new ClientThread(sock, this);
                 getClientThreads().add(ct);
-                ct.run();
+                new Thread(ct).start();
+                System.out.println("Server: ClientThread successfully started");
             } catch (IOException e) {
                 e.printStackTrace();
             }

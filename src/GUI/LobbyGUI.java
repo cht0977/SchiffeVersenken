@@ -12,11 +12,12 @@ public class LobbyGUI implements ActionListener {
 
     private LobbyClient lobbyClient;
     private HashMap<JButton, String> playerButtons;
-    JFrame mainFrame;
-    JPanel mainPanel;
-    JPanel upperPanel;
-    JPanel lowerPanel;
-    JLabel upperLabel;
+    private JFrame mainFrame;
+    private JPanel mainPanel;
+    private JPanel upperPanel;
+    private JPanel lowerPanel;
+    private JLabel upperLabel;
+    private JButton refreshButton;
 
     public LobbyGUI(LobbyClient client){
         this.lobbyClient = client;
@@ -33,7 +34,11 @@ public class LobbyGUI implements ActionListener {
         lowerPanel.setLayout(new java.awt.GridLayout(lobbyClient.getLobbyNames().size(), 2));
         buildOptions();
         upperLabel = new JLabel("Welcome " + lobbyClient.getName());
+        upperPanel.setLayout(new javax.swing.BoxLayout(upperPanel, BoxLayout.Y_AXIS));
         upperPanel.add(upperLabel);
+        refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(this);
+        upperPanel.add(refreshButton);
         mainFrame.setVisible(true);
     }
 
@@ -50,10 +55,24 @@ public class LobbyGUI implements ActionListener {
         }
     }
 
+    private void refreshOptions(){
+        lowerPanel.removeAll();
+        playerButtons.clear();
+        buildOptions();
+        mainFrame.repaint();
+        mainFrame.setVisible(false);
+        mainFrame.setVisible(true);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
-        String player = playerButtons.get(button);
-        lobbyClient.invitePlayer(player);
+        if(e.getSource() == refreshButton){
+            refreshOptions();
+        }
+        else {
+            JButton button = (JButton) e.getSource();
+            String player = playerButtons.get(button);
+            lobbyClient.invitePlayer(player);
+        }
     }
 }

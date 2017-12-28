@@ -22,16 +22,17 @@ public class Spielfeld implements SpielfeldInterface{
         schiffe = new LinkedList<>();
     }
 
-    public boolean schuss(int x, int y) throws FeldBereitsBeschossenException{
+    @Override
+    public TrefferErgebnis schuss(int x, int y) throws FeldBereitsBeschossenException{
         switch(felder[x][y].getZustand()) {
             case LEER: felder[x][y].setZustand(Feld.Zustand.LEERGETROFFEN);
-                return false;
+                return TrefferErgebnis.WASSER;
             case SCHIFF: felder[x][y].setZustand(Feld.Zustand.SCHIFFGETROFFEN);
-                return true;
+                //TODO Prüfen, ob Schiff versenkt wurde
+                return TrefferErgebnis.TREFFER;
             case LEERGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
             case SCHIFFGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
-            default: System.out.println("Fehler in Funktion schuss, Zustand ist nicht definiert");
-                return false;
+            default: throw new RuntimeException("Fehler in Funktion schuss, Zustand ist nicht definiert");
         }
     }
 

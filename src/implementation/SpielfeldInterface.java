@@ -9,10 +9,10 @@ public interface SpielfeldInterface {
      *
      * @param x Der x-Wert der Position, an die geschossen werden soll
      * @param y Der y-Wert der Position, an die geschossen werden soll
-     * @return Trrue: Der Schuss hat ein Schiff getroffen, False: Der Schuss hat kein Schiff getroffen
+     * @return TREFFER: Der Schuss hat ein Schiff getroffen, VERSENKT: und versenkt, WASSER: Der Schuss hat kein Schiff getroffen
      * @throws FeldBereitsBeschossenException
      */
-    boolean schuss(int x, int y) throws FeldBereitsBeschossenException;
+    TrefferErgebnis schuss(int x, int y) throws FeldBereitsBeschossenException;
 
     /**
      *

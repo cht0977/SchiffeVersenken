@@ -7,7 +7,12 @@ public class Schiff {
     private Position[] positionen;
     private Himmelsrichtung himmelsrichtung;
 
-
+    /**
+     *
+     * @param name Schiffart
+     * @param position StartPosition, aus dme positionen errechnet wird
+     * @param himmelsrichtung
+     */
     public Schiff(Schiffart name, Position position, Himmelsrichtung himmelsrichtung) {
         this.name = name;
         this.laenge = initiiereLaenge();
@@ -15,6 +20,12 @@ public class Schiff {
         fuellePositionen(position);
     }
 
+    /**
+     *
+     * @param name Schiffart
+     * @param positionen Position[] hat alle Positionen des Schiffes
+     * @param himmelsrichtung
+     */
     public Schiff(Schiffart name, Position[] positionen, Himmelsrichtung himmelsrichtung) {
         this.name = name;
         this.laenge = positionen.length;
@@ -48,5 +59,9 @@ public class Schiff {
 
     public Position[] getPositionen() {
         return positionen;
+    }
+
+    public Schiffart getName() {
+        return this.name;
     }
 }

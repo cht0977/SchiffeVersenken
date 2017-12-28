@@ -1,15 +1,16 @@
 package implementation;
 
 import implementation.Exceptions.FeldBereitsBeschossenException;
+import implementation.Exceptions.SchiffDarfNichtPlatziertWerdenException;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Spielfeld implements SpielfeldInterface{
-    private final int ANZAHL_SCHLACHTSCHIFF = 1;
-    private final int ANZAHL_KREUZER = 2;
-    private final int ANZAHL_ZERSTOERER = 3;
-    private final int ANZAHL_UBOOT = 4;
+
 
     private Feld[][] felder;
-    private Schiff[] schiffe;
+    private List<Schiff> schiffe;
 
     public Spielfeld() {
         felder = new Feld[10][10];
@@ -18,12 +19,10 @@ public class Spielfeld implements SpielfeldInterface{
                 felder[x][y] = new Feld();
             }
         }
+        schiffe = new LinkedList<>();
     }
 
-    /*
-    Auf das feld x, y wird geschossen, gibt bei treffer true zurück, sonst false
-     */
-    public boolean schuss(int x, int y) throws Exception{
+    public boolean schuss(int x, int y) throws FeldBereitsBeschossenException{
         switch(felder[x][y].getZustand()) {
             case LEER: felder[x][y].setZustand(Feld.Zustand.LEERGETROFFEN);
                 return false;
@@ -31,13 +30,22 @@ public class Spielfeld implements SpielfeldInterface{
                 return true;
             case LEERGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
             case SCHIFFGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
-            default: throw new RuntimeException("Hier zu kann es eigentlich nicht kommen");
+            default: System.out.println("Fehler in Funktion schuss, Zustand ist nicht definiert");
+                return false;
         }
     }
 
     @Override
-    public boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) {
-        return true;
+    public boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) throws SchiffDarfNichtPlatziertWerdenException{
+        Schiff schiff = new Schiff(art, position, himmelsrichtung);
+        boolean schiffErlaubt = SpielfeldChecker.schiffErlaubt(getSchiffe(), schiff);
+        boolean schiffPasst = SpielfeldChecker.schiffPasst(this, schiff);
+        if(schiffPasst && schiffErlaubt) {
+            addSchiff(schiff);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Feld[][] getFelder() {
@@ -48,12 +56,16 @@ public class Spielfeld implements SpielfeldInterface{
         this.felder = felder;
     }
 
-    public Schiff[] getSchiffe() {
+    public List<Schiff> getSchiffe() {
         return schiffe;
     }
 
-    public void setSchiffe(Schiff[] schiffe) {
+    public void setSchiffe(List<Schiff> schiffe) {
         this.schiffe = schiffe;
+    }
+
+    public void addSchiff(Schiff schiff) {
+        schiffe.add(schiff);
     }
 
 }

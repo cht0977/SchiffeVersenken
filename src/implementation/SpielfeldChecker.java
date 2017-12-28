@@ -18,6 +18,7 @@ public class SpielfeldChecker {
      * @return TRUE: Das Schiff passt, FALSE: Das Schiff passt nicht
      */
     public static boolean schiffPasst(Spielfeld spielfeld, Schiff schiff) {
+        //TODO: Das Schiff darf auch nicht an ein anderes angrenzen
         if(schonBelegt(spielfeld, schiff) || ausserhalbDesFeldes(schiff))
         {
             return false;
@@ -32,11 +33,10 @@ public class SpielfeldChecker {
      * @param schiffe Das Schiff Array des Spielfeldes
      * @param schiff Das zu platzierende Schiff
      * @return TRUE: Die maximale Anzahl der Schiff erlaubt es das Schiff zu platzieren, FALSE: NICHT
-     * @throws SchiffDarfNichtPlatziertWerdenException
      */
-    public static boolean schiffErlaubt(List<Schiff> schiffe, Schiff schiff) throws SchiffDarfNichtPlatziertWerdenException{
+    public static boolean schiffErlaubt(List<Schiff> schiffe, Schiff schiff){
         if(schiffe.size() >= 10) {
-            throw new SchiffDarfNichtPlatziertWerdenException("Maximale Anzahl an Schiffen erreicht");
+            return false;
         }
         Schiffart art = schiff.getName();
         int maxAnzahlArt = 0;

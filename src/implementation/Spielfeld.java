@@ -39,8 +39,11 @@ public class Spielfeld implements SpielfeldInterface{
     public boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) throws SchiffDarfNichtPlatziertWerdenException{
         Schiff schiff = new Schiff(art, position, himmelsrichtung);
         boolean schiffErlaubt = SpielfeldChecker.schiffErlaubt(getSchiffe(), schiff);
+        if(!schiffErlaubt) {
+            throw new SchiffDarfNichtPlatziertWerdenException("Maximale Anzahl an Schiffen erreicht");
+        }
         boolean schiffPasst = SpielfeldChecker.schiffPasst(this, schiff);
-        if(schiffPasst && schiffErlaubt) {
+        if(schiffPasst) {
             addSchiff(schiff);
             return true;
         } else {

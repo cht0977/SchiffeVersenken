@@ -3,6 +3,6 @@ package implementation;
 public enum Schiffart {
     SCHLACHTSCHIFF,
     KREUZER,
-    ZERSTÖRER,
+    ZERSTOERER,
     UBOOT
 }

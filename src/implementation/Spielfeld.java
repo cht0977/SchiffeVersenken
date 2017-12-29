@@ -87,7 +87,7 @@ public class Spielfeld implements SpielfeldInterface{
         throw new DaIstGarKeinSchiffException("" + treffer.getX() + ":" + treffer.getY());
     }
 
-    public void addSchiff(Schiff schiff) {
+    private void addSchiff(Schiff schiff) {
         Position[] positionen = schiff.getPositionen();
         for(Position p: positionen)
         {

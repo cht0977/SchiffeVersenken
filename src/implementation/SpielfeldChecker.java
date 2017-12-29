@@ -43,7 +43,7 @@ public class SpielfeldChecker {
             case SCHLACHTSCHIFF:
                 maxAnzahlArt = ANZAHL_SCHLACHTSCHIFF;
                 break;
-            case ZERSTÖRER:
+            case ZERSTOERER:
                 maxAnzahlArt = ANZAHL_ZERSTOERER;
                 break;
             case KREUZER:

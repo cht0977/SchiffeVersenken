@@ -38,7 +38,7 @@ public class Schiff {
             case SCHLACHTSCHIFF: return 5;
             case UBOOT: return 2;
             case KREUZER: return 4;
-            case ZERSTÖRER: return 3;
+            case ZERSTOERER: return 3;
             default: throw new IllegalArgumentException();
         }
     }

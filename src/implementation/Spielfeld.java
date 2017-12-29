@@ -26,9 +26,11 @@ public class Spielfeld implements SpielfeldInterface{
     @Override
     public TrefferErgebnis schuss(int x, int y) throws FeldBereitsBeschossenException{
         switch(felder[x][y].getZustand()) {
-            case LEER: felder[x][y].setZustand(Feld.Zustand.LEERGETROFFEN);
+            case LEER:
+                felder[x][y].setZustand(Feld.Zustand.LEERGETROFFEN);
                 return TrefferErgebnis.WASSER;
-            case SCHIFF: felder[x][y].setZustand(Feld.Zustand.SCHIFFGETROFFEN);
+            case SCHIFF:
+                felder[x][y].setZustand(Feld.Zustand.SCHIFFGETROFFEN);
                 try {
                     Schiff s = getSchiffZuTreffer(new Position(x, y));
                     boolean versenkt = SpielfeldChecker.schiffVersenkt(this, s);
@@ -41,9 +43,12 @@ public class Spielfeld implements SpielfeldInterface{
                     e.printStackTrace();
                 }
                 return TrefferErgebnis.TREFFER;
-            case LEERGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
-            case SCHIFFGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
-            default: throw new RuntimeException("Fehler in Funktion schuss, Zustand ist nicht definiert");
+            case LEERGETROFFEN:
+                throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
+            case SCHIFFGETROFFEN:
+                throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
+            default:
+                throw new RuntimeException("Fehler in Funktion schuss, Zustand ist nicht definiert");
         }
     }
 

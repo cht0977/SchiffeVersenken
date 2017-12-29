@@ -67,6 +67,28 @@ public class SpielfeldChecker {
         }
     }
 
+    /**
+     *
+     * @param spielfeld
+     * @param schiff Das getroffene Schiff
+     * @return TRUE: Das Schiff ist versenkt, FALSE: Das Schiff wurde nicht versenkt
+     */
+    public static boolean schiffVersenkt(Spielfeld spielfeld, Schiff schiff)
+    {
+        Position[] positionen = schiff.getPositionen();
+        Feld[][] felder = spielfeld.getFelder();
+        boolean versenkt = true;
+        for(Position p: positionen) {
+            if(versenkt && felder[p.getX()][p.getY()].getZustand() == Feld.Zustand.SCHIFFGETROFFEN) {
+                continue;
+            } else {
+                versenkt = false;
+            }
+        }
+        return versenkt;
+    }
+
+
     private static boolean schonBelegt(Spielfeld spielfeld, Schiff schiff) {
         List<Schiff> schiffe = spielfeld.getSchiffe();
         for(Schiff s: schiffe) {

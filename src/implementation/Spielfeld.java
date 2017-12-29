@@ -1,5 +1,6 @@
 package implementation;
 
+import implementation.Exceptions.DaIstGarKeinSchiffException;
 import implementation.Exceptions.FeldBereitsBeschossenException;
 import implementation.Exceptions.SchiffDarfNichtPlatziertWerdenException;
 
@@ -28,7 +29,17 @@ public class Spielfeld implements SpielfeldInterface{
             case LEER: felder[x][y].setZustand(Feld.Zustand.LEERGETROFFEN);
                 return TrefferErgebnis.WASSER;
             case SCHIFF: felder[x][y].setZustand(Feld.Zustand.SCHIFFGETROFFEN);
-                //TODO Prüfen, ob Schiff versenkt wurde
+                try {
+                    Schiff s = getSchiffZuTreffer(new Position(x, y));
+                    boolean versenkt = SpielfeldChecker.schiffVersenkt(this, s);
+                    if(versenkt) {
+                        return TrefferErgebnis.TREFFERVERSENKT;
+                    } else {
+                        return TrefferErgebnis.TREFFER;
+                    }
+                } catch (DaIstGarKeinSchiffException e) {
+                    e.printStackTrace();
+                }
                 return TrefferErgebnis.TREFFER;
             case LEERGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
             case SCHIFFGETROFFEN: throw new FeldBereitsBeschossenException("Feld " + x + ": " + y + "  wurde bereits beschossen, aktueller Zustand: " + felder[x][y].toString());
@@ -56,19 +67,27 @@ public class Spielfeld implements SpielfeldInterface{
         return felder;
     }
 
-    public void setFelder(Feld[][] felder) {
-        this.felder = felder;
-    }
-
     public List<Schiff> getSchiffe() {
         return schiffe;
     }
 
-    public void setSchiffe(List<Schiff> schiffe) {
-        this.schiffe = schiffe;
+    private Schiff getSchiffZuTreffer(Position treffer) throws DaIstGarKeinSchiffException {
+        for(Schiff s: schiffe) {
+            for(Position p: s.getPositionen()) {
+                if(p.getX() == treffer.getX() && p.getY() == treffer.getY()) {
+                    return s;
+                }
+            }
+        }
+        throw new DaIstGarKeinSchiffException("" + treffer.getX() + ":" + treffer.getY());
     }
 
     public void addSchiff(Schiff schiff) {
+        Position[] positionen = schiff.getPositionen();
+        for(Position p: positionen)
+        {
+            felder[p.getX()][p.getY()].setZustand(Feld.Zustand.SCHIFF);
+        }
         schiffe.add(schiff);
     }
 

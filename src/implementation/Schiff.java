@@ -64,4 +64,8 @@ public class Schiff {
     public Schiffart getName() {
         return this.name;
     }
+
+    public Himmelsrichtung getHimmelsrichtung() {
+        return himmelsrichtung;
+    }
 }

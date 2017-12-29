@@ -40,6 +40,7 @@ public class LobbyClient {
             String input = in.readLine();
             while(input != null){
                 System.out.println("LobbyClient: Server answered with: " + input);
+                input = in.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,9 @@
 package implementation;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
+import java.util.Arrays;
+
 public class Schiff {
 
     private Schiffart name;
@@ -45,16 +49,21 @@ public class Schiff {
 
     private void fuellePositionen(Position p) {
            this.positionen = new Position[laenge];
-           positionen[0] = p;
+           positionen[0] = new Position(p.getX(), p.getY());
            for(int i = 1; i < laenge; i++) {
                switch(himmelsrichtung) {
                    case OSTEN: p.setX(p.getX()+1);
+                        break;
                    case NORDEN: p.setY(p.getY()-1);
+                        break;
                    case SUEDEN: p.setY(p.getY()+1);
+                        break;
                    case WESTEN: p.setX(p.getX()-1);
+                        break;
                }
-               positionen[i] = p;
+               positionen[i] = new Position(p.getX(), p.getY());
            }
+
     }
 
     public Position[] getPositionen() {

@@ -22,5 +22,5 @@ public interface SpielfeldInterface {
      * @return True: Schiff wurde platziert, False: Schiff liegt nicht innerhalb der Grenzen oder berührt ein anderes Schiff
      * @throws SchiffDarfNichtPlatziertWerdenException
      */
-    boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) throws SchiffDarfNichtPlatziertWerdenException;
+    boolean platziereSchiff(Schiffart art, Position position,  Himmelsrichtung himmelsrichtung) throws SchiffDarfNichtPlatziertWerdenException;
 }

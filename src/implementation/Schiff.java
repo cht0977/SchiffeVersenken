@@ -49,7 +49,7 @@ public class Schiff {
 
     private void fuellePositionen(Position p) {
            this.positionen = new Position[laenge];
-           positionen[0] = new Position(p.getX(), p.getY());
+           positionen[0] = p.clone();
            for(int i = 1; i < laenge; i++) {
                switch(himmelsrichtung) {
                    case OSTEN: p.setX(p.getX()+1);
@@ -61,7 +61,7 @@ public class Schiff {
                    case WESTEN: p.setX(p.getX()-1);
                         break;
                }
-               positionen[i] = new Position(p.getX(), p.getY());
+               positionen[i] = p.clone();
            }
 
     }

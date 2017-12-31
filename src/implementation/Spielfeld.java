@@ -53,7 +53,7 @@ public class Spielfeld implements SpielfeldInterface{
     }
 
     @Override
-    public boolean platziereSchiff(Schiffart art, Himmelsrichtung himmelsrichtung, Position position) throws SchiffDarfNichtPlatziertWerdenException{
+    public boolean platziereSchiff(Schiffart art,  Position position, Himmelsrichtung himmelsrichtung) throws SchiffDarfNichtPlatziertWerdenException{
         Schiff schiff = new Schiff(art, position, himmelsrichtung);
         boolean schiffErlaubt = SpielfeldChecker.schiffErlaubt(getSchiffe(), schiff);
         if(!schiffErlaubt) {

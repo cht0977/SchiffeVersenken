@@ -154,16 +154,11 @@ public class SpielfeldChecker {
         Position lastValue = null;
         for(Iterator<Position> i = positionen.iterator(); i.hasNext();) {
             Position currentValue = i.next();
-            if(lastValue != null && currentValue.isEqual(lastValue)) {
+            if(lastValue != null && (currentValue.isEqual(lastValue) ||
+                    (currentValue.getX() < 0 || currentValue.getX() > 9 || currentValue.getY() < 0 || currentValue.getY() > 9))) {
                 i.remove();
             }
             lastValue = currentValue;
-        }
-
-        for(Position p: positionen) {
-            if(p.getX() < 0 || p.getX() > 9 || p.getY() < 0 || p.getY() > 9) {
-                positionen.remove(p);
-            }
         }
         return positionen;
     }

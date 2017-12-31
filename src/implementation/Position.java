@@ -36,4 +36,8 @@ public class Position {
     public String toString() {
         return "" + getX() + ":" + getY();
     }
+
+    public Position clone() {
+        return new Position(getX(), getY());
+    }
 }

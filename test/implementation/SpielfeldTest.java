@@ -1,7 +1,7 @@
 package implementation;
 
 import implementation.Exceptions.SchiffDarfNichtPlatziertWerdenException;
-import jdk.nashorn.internal.runtime.ECMAException;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
